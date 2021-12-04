@@ -1,0 +1,18 @@
+FROM python:3.9.9-alpine3.14
+
+ARG version=1.0.2
+
+WORKDIR /cvdupdate
+
+RUN git clone --recursive --depth 1 --branch cvdupdate-${version} https://github.com/AvapnoHelpingHand/cvdupdate.git ./
+
+RUN mkdir /var/log/cvd
+RUN mkdir -p /var/www/html
+ 
+RUN cvd config set -l /var/log/cvd/
+RUN cvd config set -d /var/www/html/
+
+RUN apk add --no-cache tini
+
+# 14400 seconds (4 hours)
+ENTRYPOINT ["tini", "--", "/bin/sh", "-c", "cvd update >> /dev/stdout; while sleep 14400; do cvd update >> /dev/stdout; done"]
