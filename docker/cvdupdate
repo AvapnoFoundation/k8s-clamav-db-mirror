@@ -4,6 +4,8 @@ ARG version=1.0.2
 
 WORKDIR /cvdupdate
 
+RUN apk update && apk add --no-cache git
+
 RUN git clone --recursive --depth 1 --branch cvdupdate-${version} https://github.com/AvapnoHelpingHand/cvdupdate.git ./
 
 RUN mkdir /var/log/cvd
