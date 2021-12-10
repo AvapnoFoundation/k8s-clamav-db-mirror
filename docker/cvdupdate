@@ -18,5 +18,5 @@ RUN cvd config set -d /var/www/html/
 
 RUN apk add --no-cache tini
 
-# 14400 seconds (4 hours)
-ENTRYPOINT ["tini", "--", "/bin/sh", "-c", "cvd update >> /dev/stdout; while sleep 14400; do cvd update >> /dev/stdout; done"]
+# 7200 seconds (2 hours)
+ENTRYPOINT ["tini", "--", "/bin/sh", "-c", "cvd update >> /dev/stdout; while sleep 7200; do cvd update >> /dev/stdout; done"]
